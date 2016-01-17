@@ -20,7 +20,7 @@ function combineBooksAuthors(books, authors){
   return books;
 }
 /* GET home page. */
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
   var books;
   var authors;
   knex('books')/*.leftJoin('books_authors', {'books.id' : 'books_authors.book_id'})*/
@@ -33,6 +33,33 @@ router.get('/', function(req, res){
       res.render('books', {books: list});
     });
   });
+});
+
+router.get('/new', function(req, res, next){
+  knex('authors').select().then(function(authors){
+    console.log(authors);
+    res.render('addBook', {authors: authors});
+  });
+});
+
+router.post('/new', function(req, res, next){
+  console.log(req.body.authors);
+  knex('books').insert({
+    title: req.body.title,
+    genre: req.body.genre,
+    description: req.body.description,
+    cover_url: req.body.cover_url
+  }, 'id').then(function(id){
+    console.log(id);
+    console.log(id.value);
+    console.log(parseInt(id.value));
+    knex('books_authors').insert({
+      book_id: id[0],
+      author_id: req.body.authors
+    }).then(function(){
+    res.redirect('/books');
+  });
+});
 });
 
 
