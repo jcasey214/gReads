@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  main
+  #list
+    each book in books
+      div(class="bookSummary")
+        img(src=book.cover_url alt=book.title)
+        h1= book.title
+        h2 By #{book.authorList}
+        h3= book.genre
+        p= book.description
