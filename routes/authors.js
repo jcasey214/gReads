@@ -5,13 +5,16 @@ var knex = require('../db/knex');
 function combineAuthorsBooks(books, authors){
   authors.map(function(author){
     author.books = [];
+    author.bookObjects = [];
     books.map(function(book){
       if (author.id === book.author_id){
         author.books.push(book.title);
+        author.bookObjects.push(book);
       }else{
         return;
       }
     });
+    console.log(author.bookObjects);
     author.bookList = author.books.join('\n');
   });
   return authors;
@@ -50,9 +53,10 @@ router.get('/:id/delete', function(req, res, next){
   var books;
   knex('authors').where('id', req.params.id).then(function(data){
     author = data;
-    knex('books').then(function(data){
+    knex('books').join('books_authors', {'books.id' : 'books_authors.book_id'}).then(function(data){
       books = data;
       var list = combineAuthorsBooks(books, author);
+      console.log(list);
       res.render('author_delete', {authors: list});
     });
   });
