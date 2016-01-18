@@ -84,4 +84,18 @@ router.post('/:id/edit', function(req, res, next){
   });
 });
 
+router.get('/:id', function(req, res, next){
+  var books;
+  var authors;
+  knex('authors').where('id', req.params.id).then(function(data){
+    console.log(data);
+    authors = data;
+    knex('books').join('books_authors', {'books.id' : 'books_authors.book_id'}).then(function(data){
+      books = data;
+      combineAuthorsBooks(books, authors);
+      res.render('author', {authors: authors, books: books});
+    });
+  });
+});
+
 module.exports = router;
