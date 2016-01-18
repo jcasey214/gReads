@@ -1,20 +1,21 @@
 extends layout
 
 block content
-  form(action="/books/new" method="POST")
-    label(for="title") Book Title
-    input(type="text" name="title" id="title")
-    label(for="genre") Genre
-    select(id="genre" name="genre")
-      option(value="Python") Python
-      option(value="Javascript") Javascript
-    label(for="cover_url") Cover Image URL
-    input(type="text" name="cover_url" id="cover_url")
-    label(for="description") Description
-    textarea(cols="50" rows="10" name="description" id="description")
-    label(for="authors")
-    #authors
-    select(id="authors" name="authors")
-      for author in authors
-          option(value=author.id multiple="true") #{author.first_name} #{author.last_name}
-    button(type="submit" value="Add Book") Add Book
+  section
+    form(action="/books/new" method="POST")
+      label(for="title") Book Title
+      input(type="text" name="title" id="title")
+      label(for="genre") Genre
+      select(id="genre" name="genre")
+        option(value="Python") Python
+        option(value="Javascript") Javascript
+      label(for="cover_url") Cover Image URL
+      input(type="text" name="cover_url" id="cover_url")
+      label(for="description") Description
+      textarea(cols="50" rows="10" name="description" id="description")
+      label(for="authors")
+      #authors
+      select(id="authors" name="authors")
+        for author in authors
+            option(value=author.id multiple="true") #{author.first_name} #{author.last_name}
+      button(type="submit" value="Add Book") Add Book

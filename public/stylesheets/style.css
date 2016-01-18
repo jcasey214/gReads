@@ -2,7 +2,7 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0px;
-  padding: 0px
+  padding: 0px;
 }
 
 a {
@@ -25,4 +25,15 @@ header>h1{
   font-size: 3em;
   top: -20px;
   color: rgb(163, 155, 136);
+}
+
+main{
+  display: flex;
+  flex-direction: row;
+}
+
+.nav{
+  width: 30vw;
+  height: 100vw;
+  margin: 20px;
 }
