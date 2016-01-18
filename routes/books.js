@@ -35,6 +35,25 @@ router.get('/', function(req, res, next){
   });
 });
 
+router.get('/:id/delete', function(req, res, next){
+  knex('books').where('id', req.params.id).then(function(data){
+    books = data;
+    knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
+      authors = data;
+      var list = combineBooksAuthors(books, authors);
+      res.render('book_delete', {books: list});
+    });
+  });
+});
+
+router.post('/:id/delete', function(req, res, next){
+  knex('books_authors').delete().where('book_id', req.params.id).then(function(){
+    knex('books').delete().where('id', req.params.id).then(function(){
+      res.redirect('/books');
+    });
+  });
+});
+
 router.get('/new', function(req, res, next){
   knex('authors').select().then(function(authors){
     console.log(authors);
