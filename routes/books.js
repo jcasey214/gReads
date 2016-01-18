@@ -80,21 +80,39 @@ router.get('/new', function(req, res, next){
 });
 
 router.post('/new', function(req, res, next){
-  console.log(req.body.authors);
-  console.log(req.body.genre);
-  knex('books').insert({
-    title: req.body.title,
-    genre: req.body.genre,
-    description: req.body.description,
-    cover_url: req.body.cover_url
-  }, 'id').then(function(id){
-    knex('books_authors').insert({
-      book_id: id[0],
-      author_id: req.body.authors
-    }).then(function(){
+  if(Array.isArray(req.body.authors)){
+    knex('books').insert({
+      title: req.body.title,
+      genre: req.body.genre,
+      description: req.body.description,
+      cover_url: req.body.cover_url
+    }, 'id').then(function(id){
+      req.body.authors.map(function(author){
+        knex('books_authors').insert({
+          book_id: id[0],
+          author_id: author
+        }).then(function(){
+          return;
+      });
+    });
+  }).then(function(){
     res.redirect('/books');
   });
-});
+  }else{
+    knex('books').insert({
+        title: req.body.title,
+        genre: req.body.genre,
+        description: req.body.description,
+        cover_url: req.body.cover_url
+      }, 'id').then(function(id){
+          knex('books_authors').insert({
+            book_id: id[0],
+            author_id: req.body.authors
+          }).then(function(){
+            res.redirect('/books');
+        });
+    });
+  }
 });
 
 router.get('/:id', function(req, res, next){
@@ -129,26 +147,6 @@ router.post('/:id/edit', function(req, res, next){
       res.redirect('/books');
     });
   });
-  // return new Promise(function(resolve, reject){
-  //   if(req.body.title){
-  //     knex('books').update({title: req.body.title}).where('id', req.params.id);
-  //   }
-  //   if(req.body.genre){
-  //     knex('books').update({genre: req.body.genre}).where('id', req.params.id);
-  //   }
-  //   if(req.body.description){
-  //     knex('books').update({description: req.body.description}).where('id', req.params.id);
-  //   }
-  //   if(req.body.cover_url){
-  //     knex('books').update({cover_url: req.body.cover_url}).where('id', req.params.id);
-  //   }
-  //   if(req.body.authors){
-  //     knex('books_authors').update({author_id: req.body.authors}).where('book_id', req.params.id);
-  //   }
-  //   resolve();
-  // }).then(function(){
-  //   res.redirect('/books');
-  // });
 });
 
 

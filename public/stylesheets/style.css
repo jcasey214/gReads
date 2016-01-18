@@ -37,18 +37,17 @@ section.landing{
 }
 
 .nav{
-  width: 30vw;
+  width: 100px;
   height: 100vh;
   margin: 30px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
 }
 
 .nav img{
-  width: 100%;
+  width: 100px;
 }
 
 .nav h2{
@@ -248,7 +247,7 @@ div.add-author-form, div.add-book-form{
   width: 100%;
 }
 
-.add-author-form select, .add-book-form select{
+.add-author-form select, .add-book-form button{
   display: block;
   width: 100%;
 }

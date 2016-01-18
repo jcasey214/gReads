@@ -16,7 +16,7 @@ block content
         textarea(cols="50" rows="10" name="description" id="description")
         label(for="authors")
         #authors
-        select(id="authors" name="authors")
+        select(id="authors" name="authors" size="5" multiple)
           for author in authors
-              option(value=author.id multiple="true") #{author.first_name} #{author.last_name}
+              option(value=author.id) #{author.first_name} #{author.last_name}
         button(type="submit" value="Add Book") Add Book
