@@ -12,4 +12,8 @@ block content
         textarea(type="text" lines="5" cols="50" rows="10" name="bio" id="bio") #{author.bio}
         label(for="portrait_url") Portrait URL
         input(type="text" name="portrait_url" id="portrait_url" value=author.portrait_url)
+        label(for="books")
+        select(id="books" size="5" multiple)
+          for book in books
+            option(value=book.id multiple="true") #{book.title}
         button(type="submit") Edit Author

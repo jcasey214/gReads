@@ -14,7 +14,6 @@ function combineAuthorsBooks(books, authors){
         return;
       }
     });
-    console.log(author.bookObjects);
     author.bookList = author.books.join('\n');
   });
   return authors;
@@ -34,18 +33,45 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/new', function(req, res, next){
-  res.render('add_author', {});
+  knex('books').then(function(data){
+    res.render('add_author', {books: data});
+  });
 });
 
 router.post('/new', function(req, res, next){
-  knex('authors').insert({
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    bio: req.body.bio,
-    portrait_url: req.body.portrait_url
-  }, 'id').then(function(id){
-    res.redirect('/authors');
-  });
+  if(Array.isArray(req.body.books)){
+    knex('authors').insert({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      bio: req.body.bio,
+      portrait_url: req.body.portrait_url
+    }, 'id').then(function(id){
+      req.body.books.map(function(book){
+          knex('books_authors').insert({
+            book_id: book,
+            author_id: id[0]
+          }).then(function(){
+            return;
+          });
+      });
+    }).then(function(){
+      res.redirect('/authors');
+    });
+  }else{
+    knex('authors').insert({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      bio: req.body.bio,
+      portrait_url: req.body.portrait_url
+    }, 'id').then(function(id){
+      knex('books_authors').insert({
+        book_id: req.body.books,
+        author_id: id[0]
+      }).then(function(){
+        res.redirect('/authors');
+      });
+    });
+  }
 });
 
 router.get('/:id/delete', function(req, res, next){
@@ -72,8 +98,12 @@ router.post('/:id/delete', function(req, res, next){
 
 router.get('/:id/edit', function(req, res, next){
   knex('authors').select().where('id', req.params.id).first().then(function(data){
-    console.log(data);
-    res.render('author_edit', {author: data});
+    var author = data;
+    knex('books').then(function(data){
+      var books = data;
+    }).then(function(){
+      res.render('author_edit', {author: author, books : books});
+    });
   });
 });
 

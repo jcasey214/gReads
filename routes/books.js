@@ -13,9 +13,7 @@ function combineBooksAuthors(books, authors){
       }else{
         return;
       }
-      console.log(book.authors);
     });
-    console.log(book.authorObjects);
     book.authorList = book.authors.join( " & ");
   });
   return books;
