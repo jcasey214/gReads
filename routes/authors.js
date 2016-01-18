@@ -97,10 +97,12 @@ router.post('/:id/delete', function(req, res, next){
 });
 
 router.get('/:id/edit', function(req, res, next){
+  var authors;
+  var books;
   knex('authors').select().where('id', req.params.id).first().then(function(data){
-    var author = data;
+    author = data;
     knex('books').then(function(data){
-      var books = data;
+      books = data;
     }).then(function(){
       res.render('author_edit', {author: author, books : books});
     });
