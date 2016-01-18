@@ -35,6 +35,21 @@ router.get('/', function(req, res, next){
   });
 });
 
+router.get('/:id', function(req, res, next){
+  var books;
+  var authors;
+  knex('books').where('id', req.params.id)/*.leftJoin('books_authors', {'books.id' : 'books_authors.book_id'})*/
+  .then(function(data){
+    books = data;
+    knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
+      authors = data;
+      var list = combineBooksAuthors(books, authors);
+      // res.json(list);
+      res.render('book', {books: list});
+    });
+  });
+});
+
 router.get('/:id/delete', function(req, res, next){
   knex('books').where('id', req.params.id).then(function(data){
     books = data;
