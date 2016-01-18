@@ -66,4 +66,22 @@ router.post('/:id/delete', function(req, res, next){
   });
 });
 
+router.get('/:id/edit', function(req, res, next){
+  knex('authors').select().where('id', req.params.id).first().then(function(data){
+    console.log(data);
+    res.render('author_edit', {author: data});
+  });
+});
+
+router.post('/:id/edit', function(req, res, next){
+  knex('authors').update({
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    bio: req.body.bio,
+    portrait_url: req.body.portrait_url
+  }).where('id', req.params.id).then(function(){
+    res.redirect('/authors');
+  });
+});
+
 module.exports = router;
