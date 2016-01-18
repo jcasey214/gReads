@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-function combineBooksAuthors(books, authors){
+function combineAuthorsBooks(books, authors){
   authors.map(function(author){
     author.books = [];
     books.map(function(book){
@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
     authors = data;
     knex('books').join('books_authors', {'books_authors.book_id' : 'books.id'}).then(function(data){
       books = data;
-      var list = combineBooksAuthors(books, authors);
+      var list = combineAuthorsBooks(books, authors);
       res.render('authors', {authors: list});
     });
   });
@@ -42,7 +42,28 @@ router.post('/new', function(req, res, next){
     portrait_url: req.body.portrait_url
   }, 'id').then(function(id){
     res.redirect('/authors');
-  })
+  });
+});
+
+router.get('/:id/delete', function(req, res, next){
+  var author;
+  var books;
+  knex('authors').where('id', req.params.id).then(function(data){
+    author = data;
+    knex('books').then(function(data){
+      books = data;
+      var list = combineAuthorsBooks(books, author);
+      res.render('author_delete', {authors: list});
+    });
+  });
+});
+
+router.post('/:id/delete', function(req, res, next){
+  knex('books_authors').delete().where('author_id', req.params.id).then(function(){
+    knex('authors').delete().where('id', req.params.id).then(function(data){
+      res.redirect('/authors');
+    });
+  });
 });
 
 module.exports = router;

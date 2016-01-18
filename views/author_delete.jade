@@ -1,8 +1,7 @@
 extends layout
 
 block content
-  section
-  #list
+  section 
     each author in authors
       div(class="authorSummary")
         img(src=author.portrait_url alt=author.last_name)
@@ -11,7 +10,6 @@ block content
         h3 Books  
           ul
           each book in author.books
-            li= book
-        a(href="/authors/" + author.id + "/delete") Delete
-        a(href="/authors/" + author.id + "/edit") Edit
-    a(href="/authors/new") Add an Author
+            li= book  
+        form(action="/authors/" + author.id + "/delete" method="POST")
+          button(type="submit") Delete this author
