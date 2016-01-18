@@ -2,19 +2,20 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-function Books(){
-  return knex('books');
-}
 function combineBooksAuthors(books, authors){
   books.map(function(book){
     book.authors = [];
+    book.authorObjects = [];
     authors.map(function(author){
       if (author.book_id === book.id){
+        book.authorObjects.push(author);
         book.authors.push(author.first_name + " " + author.last_name);
       }else{
         return;
       }
+      console.log(book.authors);
     });
+    console.log(book.authorObjects);
     book.authorList = book.authors.join( " & ");
   });
   return books;
