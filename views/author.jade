@@ -1,17 +1,20 @@
-extends layout
+extends ./nav.jade
 
 block content
   section
     each author in authors
       div(class="authorSummary")
         img(src=author.portrait_url alt=author.last_name)
-        h1 #{author.first_name} #{author.last_name}
-        p= author.bio
-        h2 Books 
-        ul
-        each book in author.bookObjects
-          a(href="/books/" + book.id)
-            li=book.title
-        a(href="/authors/" + author.id + "/delete") Delete
-        a(href="/authors/" + author.id + "/edit") Edit
+        div
+          div(class="author-header")
+            h1 #{author.first_name} #{author.last_name}
+            div
+              a(href="/authors/" + author.id + "/delete") Delete
+              a(href="/authors/" + author.id + "/edit") Edit
+          p= author.bio
+          h2 Books 
+          ul
+          each book in author.bookObjects
+            a(href="/books/" + book.id)
+              li=book.title
     //- a(href="/authors/new") Add an Author

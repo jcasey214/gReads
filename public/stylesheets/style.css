@@ -14,7 +14,7 @@ header{
   background: rgb(47, 47, 47);
 }
 
-header>img{
+header img{
   display: inline-block;
   width: 100px;
   height: 100px;
@@ -27,13 +27,228 @@ header>h1{
   color: rgb(163, 155, 136);
 }
 
-main{
+section.landing{
+  width: 100vw;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  margin-top: 50px;
+  flex-wrap: wrap;
 }
 
 .nav{
   width: 30vw;
-  height: 100vw;
+  height: 100vh;
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav img{
+  width: 100%;
+}
+
+.nav h2{
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+  margin-top: 10px;
+  text-align: center;
+  /*transform: rotate(0.75turn);*/
+}
+
+.nav a{
+  margin: 30% 0;
+}
+
+figure.landing{
+  width: 300px;
+}
+
+figure.landing>img{
+  width: 100%
+}
+
+.landing figcaption{
+  color: black;
+  text-align: center;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+main{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.authorSummary, .bookSummary{
+  display: flex;
+  flex-direction: row;
+  margin: 25px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.authorSummary>img, .bookSummary>img{
+  width: 20%;
+  height: 20%;
+}
+
+.authorSummary>div, .bookSummary>div{
+  width: 70%;
+}
+
+.authorSummary h1, .bookSummary h1{
+  margin: 0;
+}
+
+.authorSummary p, .booksummary p{
+  margin: 0 20px;
+  padding: 0;
+}
+
+.bookSummary h2{
+  display: inline-block;
+  margin: 0 0 20px 0;
+}
+
+.bookSummary h3{
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.bookSummary h4{
+  margin: 0;
+}
+
+.bookSummary a{
+  color: black;
+  text-decoration: none;
+}
+
+.authorSummary h2{
+  margin: 10px 0 0 20px;
+  padding: 0px;
+  color: black;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.authorSummary ul{
+  margin: 0;
+}
+
+.authorSummary li{
+  margin: 0 0 0 20px;
+  color: black;
+  text-decoration: none;
+  list-style-type: none;
+  font-size: 17px;
+}
+
+a{
+  text-decoration: none;
+}
+
+.edit{
   margin: 20px;
+}
+
+.author-header, .book-header{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.book-header div, .author-header div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 30%;
+  margin-left: 10px;
+}
+
+.author-header a, .book-header a{
+  color: black;
+  border: 1px solid black;
+  background-color: silver;
+  text-decoration: none;
+  padding: 7px;
+  align-items: center;
+  margin: 0;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.genre-select{
+  display: block;
+  text-align: center;
+  font-size: 20px;
+}
+
+.genre-select button{
+  margin: 5px;
+  color: black;
+  border: 1px solid black;
+  background-color: silver;
+  text-decoration: none;
+  padding: 4px;
+  align-items: center;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.add-book{
+  text-align: center;
+  font-size: 20px;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 7px;
+}
+
+div.add-author-form, div.add-book-form{
+  display: flex;
+  flex-direction: row;
+  margin: 50px 25px;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 100vh;
+  width: 70vw;
+}
+
+.add-author-form form, .add-book-form form{
+  width: 50%;
+}
+
+.add-author-form label, .add-book-form label{
+  display: block;
+  font-size: 10px;
+  margin-top: 20px;
+}
+
+.add-author-form input, .add-book-form input{
+  display: block;
+  width: 100%;
+}
+
+.add-author-form textarea, .add-book-form textarea{
+  display: block;
+  width: 100%;
+}
+
+.add-author-form button, .add-book-form button{
+  display: block;
+  width: 100%;
+}
+
+.add-author-form select, .add-book-form select{
+  display: block;
+  width: 100%;
 }

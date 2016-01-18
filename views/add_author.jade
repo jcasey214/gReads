@@ -1,14 +1,15 @@
-extends layout
+extends ./nav.jade
 
 block content
   section
-    form(action="/authors/new" method="POST")
-      label(for="first_name") First Name
-      input(type="text" name="first_name" id="first_name")
-      label(for="last_name") Last Name
-      input(type="text" id="last_name" name="last_name")
-      label(for="bio") Bio
-      input(type="text" name="bio" id="bio")
-      label(for="portrait_url") Portrait URL
-      input(type="text" name="portrait_url" id="portrait_url")
-      button(type="submit") Add Author
+    div(class="add-author-form")
+      form(action="/authors/new" method="POST")
+        label(for="first_name") First Name
+        input(type="text" name="first_name" id="first_name")
+        label(for="last_name") Last Name
+        input(type="text" id="last_name" name="last_name")
+        label(for="bio") Bio
+        textarea(type="text" lines="5" cols="50" rows="10" name="bio" id="bio")
+        label(for="portrait_url") Portrait URL
+        input(type="text" name="portrait_url" id="portrait_url")
+        button(type="submit") Add Author

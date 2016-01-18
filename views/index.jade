@@ -1,12 +1,19 @@
-extends layout
-
-block content
-  section
-    a(href="/authors")
-      figure
-        img(src="#")
-        figcaption Authors
-    a(href="/books")
-      figure
-        img(src="#")
-        figcaption Books
+doctype html
+html
+  head
+    title Galvanize Reads
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header  
+      a(href="/")
+        img(src="/images/galvanize.png")
+      h1 Galvanize Reads
+    section(class="landing")
+      a(href="/authors")
+        figure(class="landing")
+          img(src="/images/author.png")
+          figcaption Authors
+      a(href="/books")
+        figure(class="landing")
+          img(src="/images/book.png")
+          figcaption Books

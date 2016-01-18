@@ -1,16 +1,17 @@
-extends layout
+extends ./nav.jade
 
 block content
   section 
     each author in authors
       div(class="authorSummary")
         img(src=author.portrait_url alt=author.last_name)
-        h1 #{author.first_name} #{author.last_name}
-        p= author.bio
-        h2 Books 
-        ul
-        each book in author.bookObjects
-          a(href="/books/" + book.id)
-            li=book.title 
-        form(action="/authors/" + author.id + "/delete" method="POST")
-          button(type="submit") Delete this author
+        div
+          h1 #{author.first_name} #{author.last_name}
+          p= author.bio
+          h2 Books 
+          ul
+          each book in author.bookObjects
+            a(href="/books/" + book.id)
+              li=book.title 
+          form(action="/authors/" + author.id + "/delete" method="POST")
+            button(type="submit") Delete this author
