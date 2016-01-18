@@ -29,7 +29,7 @@ router.get('/', function(req, res, next){
     knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
       authors = data;
       var list = combineBooksAuthors(books, authors);
-      // res.json(list);
+      res.json(list);
       res.render('books', {books: list});
     });
   });
