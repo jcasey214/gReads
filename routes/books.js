@@ -24,32 +24,34 @@ function combineBooksAuthors(books, authors){
 router.get('/', function(req, res, next){
   var books;
   var authors;
-  knex('books')/*.leftJoin('books_authors', {'books.id' : 'books_authors.book_id'})*/
-  .then(function(data){
-    books = data;
-    knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
-      authors = data;
-      var list = combineBooksAuthors(books, authors);
-      // res.json(list);
-      res.render('books', {books: list});
+  knex('books').then(function(data){
+      books = data;
+      knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
+        authors = data;
+        var list = combineBooksAuthors(books, authors);
+        // res.json(list);
+        res.render('books', {books: list});
     });
   });
 });
 
-router.get('/:id', function(req, res, next){
-  var books;
-  var authors;
-  knex('books').where('id', req.params.id)/*.leftJoin('books_authors', {'books.id' : 'books_authors.book_id'})*/
-  .then(function(data){
-    books = data;
-    knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
-      authors = data;
-      var list = combineBooksAuthors(books, authors);
-      // res.json(list);
-      res.render('book', {books: list});
+router.post('/', function(req, res, next){
+  if(req.body.genre === "All"){
+    res.redirect('/books');
+  }else{
+    knex('books').where('genre', req.body.genre)
+    .then(function(data){
+      books = data;
+      knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
+        authors = data;
+        var list = combineBooksAuthors(books, authors);
+        // res.json(list);
+        res.render('books', {books: list});
+      });
     });
-  });
+  }
 });
+
 
 router.get('/:id/delete', function(req, res, next){
   knex('books').where('id', req.params.id).then(function(data){
@@ -79,15 +81,13 @@ router.get('/new', function(req, res, next){
 
 router.post('/new', function(req, res, next){
   console.log(req.body.authors);
+  console.log(req.body.genre);
   knex('books').insert({
     title: req.body.title,
     genre: req.body.genre,
     description: req.body.description,
     cover_url: req.body.cover_url
   }, 'id').then(function(id){
-    console.log(id);
-    console.log(id.value);
-    console.log(parseInt(id.value));
     knex('books_authors').insert({
       book_id: id[0],
       author_id: req.body.authors
@@ -95,6 +95,21 @@ router.post('/new', function(req, res, next){
     res.redirect('/books');
   });
 });
+});
+
+router.get('/:id', function(req, res, next){
+  var books;
+  var authors;
+  knex('books').where('id', req.params.id)/*.leftJoin('books_authors', {'books.id' : 'books_authors.book_id'})*/
+  .then(function(data){
+    books = data;
+    knex('authors').join('books_authors', {'authors.id' : 'books_authors.author_id'}).then(function(data){
+      authors = data;
+      var list = combineBooksAuthors(books, authors);
+      // res.json(list);
+      res.render('book', {books: list});
+    });
+  });
 });
 
 router.get('/:id/edit', function(req, res, next){

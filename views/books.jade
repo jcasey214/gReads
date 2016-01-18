@@ -3,6 +3,13 @@ extends layout
 block content
   section
   #list
+    form(action="/books" method="POST")
+      label(for="genre")
+      select(id="genre" name="genre")
+        option(value="All" autofocus) All
+        option(value="Javascript") Javascript
+        option(value="Python") Python
+      button(type="submit") Filter
     each book in books
       div(class="bookSummary")
         img(src=book.cover_url alt=book.title)
