@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  main
+  #list
+    each author in authors
+      div(class="authorSummary")
+        img(src=author.portrait_url alt=author.last_name)
+        h1 #{author.first_name} #{author.last_name}
+        p= author.bio
+        h3 Books  
+          ul
+          each book in author.books
+            li= book
+    //-     a(href="/books/" + book.id + "/delete") Delete
+    //-     a(href="/books/" + book.id + "/edit") Edit
+    //- a(href="/books/new") Add a new book
