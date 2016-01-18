@@ -30,4 +30,19 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/new', function(req, res, next){
+  res.render('add_author', {});
+});
+
+router.post('/new', function(req, res, next){
+  knex('authors').insert({
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    bio: req.body.bio,
+    portrait_url: req.body.portrait_url
+  }, 'id').then(function(id){
+    res.redirect('/authors');
+  })
+});
+
 module.exports = router;
