@@ -20,7 +20,7 @@ function combineBooksAuthors(books, authors){
   return books;
 }
 /* GET home page. */
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
   var books;
   var authors;
   knex('books')/*.leftJoin('books_authors', {'books.id' : 'books_authors.book_id'})*/
